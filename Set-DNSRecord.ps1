@@ -11,7 +11,7 @@
 .EXAMPLE
 	PS> ./Set-DNSRecord -DNSServerName "DC01" -HostName "SQL01" -ZoneName "MrRamsus.local" -IPv4Address "10.10.10.115"
 .LINK
-	https://github.com/MrRamsus/PowerShell/blob/main/Windows/AD/Set-DNSRecord.ps1
+	https://github.com/MrRamsus/PowerShell_AD_Public/blob/main/Set-DNSRecord.ps1
 .NOTES
 	Author: MrRamsus
 #>
