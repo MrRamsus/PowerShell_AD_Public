@@ -32,7 +32,6 @@ function Set-DNSRecord {
         $IPv4Address
     )
     
-    Write-Host $DNSServerName, $Hostname, $ZoneName, $IPv4Address
     $CheckRecord = get-DnsServerResourceRecord -ComputerName $DNSServerName -Name $Hostname -ZoneName $ZoneName -ErrorAction SilentlyContinue 
     If($CheckRecord){
         try {
