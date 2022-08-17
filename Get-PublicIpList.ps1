@@ -49,7 +49,7 @@ Function ObtainPublicIP{
         }
         catch {
             Write-Host "$Server is not responding for RemotePowershell." -ForegroundColor Red
-            $script:ListPubIP += $Server
+            $script:ListPubIP += $Server+";No_WinRM"
         }
         
     }
