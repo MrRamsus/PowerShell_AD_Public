@@ -1,25 +1,25 @@
 <#
 .SYNOPSIS
-	Set and change a single or multiple DNS records
+	Set and change a single or multiple DNS A-records
 .DESCRIPTION
-	This PowerShell script can create and change a single or multiple DNS record. No changes of this script is needed.
+	This PowerShell script can create and change a single or multiple DNS A-record. No changes of this script is needed.
 .PARAMETER message
     DNSServerName = the DNS Server host
     HostName = The record of the DNS name you will add/change
     ZoneName = The name of the zone inside the DNS server
     IPv4Address = The common IPv4 Address you will add
-    CSVPath = The complete path (and file name) of the CSV file
+    CSVPath = The complete path (and file name and extension) of the CSV file
     Delimiter = The delimiter of the CSV file
     
     ====CSV File====
-    CSV Path needs to be have the following header (or other delimiter)
+    CSV File needs to be have the following header (or other delimiter)
     ================
     DNSServerName;Hostname;ZoneName;IPv4Address
     
 .EXAMPLE
-	PS> ./Set-DNSRecord.ps1
+	PS> ./Set-DNSARecord.ps1
 .LINK
-	https://github.com/MrRamsus/PowerShell_AD_Public/blob/main/Set-DNSRecord.ps1
+	https://github.com/MrRamsus/PowerShell_AD_Public/blob/main/Set-DNSARecord.ps1
 .NOTES
 	Author: MrRamsus
 #>
