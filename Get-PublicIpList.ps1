@@ -24,7 +24,14 @@ Function ImportCSV{
     param (
             [string]$CSVPath = $(Write-Host "CSV Path: " -ForegroundColor Green -NoNewline; Read-Host)
         )
-    $script:ServerList = Import-CSV -Path $CSVPath
+    try {
+        $script:ServerList = Import-CSV -Path $CSVPath -ErrorAction Stop
+    }
+    catch {
+        Write-Host "Importing the CSV file has failed. Please try again!" -ForegroundColor Red
+        ImportCSV
+    }
+        
 }
 
 Function ObtainPublicIP{
@@ -32,12 +39,19 @@ Function ObtainPublicIP{
             $ServerList
     )
     ForEach($Server in $ServerList.Name){        
-        $Status = Invoke-Command -ComputerName $ServerName -ScriptBlock { 
-            $GetHostname = $Env:ComputerName
-            $PubIP = (Invoke-WebRequest ifconfig.me/ip).Content.Trim()
-            Return $GetHostname, $PubIP
+        try {
+            $Status = Invoke-Command -ComputerName $ServerName -ScriptBlock { 
+                $GetHostname = $Env:ComputerName
+                $PubIP = (Invoke-WebRequest ifconfig.me/ip).Content.Trim()
+                Return $GetHostname, $PubIP
+            } -ErrorAction Stop
+            $script:ListPubIP += @($Status[0]+";"+$Status[1])
         }
-        $script:ListPubIP += @($Status[0]+";"+$Status[1])
+        catch {
+            Write-Host "$Server is not responding for RemotePowershell." -ForegroundColor Red
+            $script:ListPubIP += $Server
+        }
+        
     }
 }
 
@@ -46,7 +60,13 @@ Function ExportToCSV{
         $InputObject,
         [string]$CSVOutPath = $(Write-Host "Location to export the CSV: " -ForegroundColor Green -NoNewline; Read-Host)
     )
-    Out-File -FilePath $CSVOutPath -InputObject $InputObject -Encoding ASCII -Width 50
+    try {
+        Out-File -FilePath $CSVOutPath -InputObject $InputObject -Encoding ASCII -Width 50 -ErrorAction Stop
+    }
+    catch {
+        Write-Host "Output file has not been created." -ForegroundColor Yellow
+    }
+    
 }
 
 #Execution:
